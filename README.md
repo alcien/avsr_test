@@ -35,16 +35,23 @@ python generate_wav.py --test_dir [My_dir]
 <img src='https://github.com/alcien/avsr_test/blob/main/asset/mouth_lip_K_5_M_04_C955_A_012_9.gif' width:200px height:100px>
 </img>
 
+### 얼굴 landmark를 찾기 위한 필요 파일 다운로드
 ~~~
-wget 
-wget 
+wget http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+bzip2 -d /content/data/misc/shape_predictor_68_face_landmarks.dat.bz2
 
+wget --content-disposition https://github.com/mpc001/Lipreading_using_Temporal_Convolutional_Networks/raw/master/preprocessing/20words_mean_face.npy
+~~~
+
+### 입 모양 영상 추출
+~~~
 python generate_mouth.py --test_dir [dir] --face_predictor_path [face predictor file path] --mean_face_path [mean face file path]
 ~~~
 
-1. test_dir
-2. face_predictor_path
-3. mean_face_path
+1. test_dir : 원본 영상이 담긴 폴더
+    * 입 모양 영상은 test_dir 이하 mouth 폴더에 저장됩니다.     
+2. face_predictor_path : shape_predictor_68_face_landmarks.dat의 위치
+3. mean_face_path : 20words_mean_face.npy의 위치
 
 
 
