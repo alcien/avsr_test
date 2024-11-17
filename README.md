@@ -25,7 +25,27 @@ python generate_wav.py --test_dir [My_dir]
 
 영상에서 입 모양 부분을 추출하여 비디오로 나타냅니다. 
 
+### 원본 영상 
+
+<img src='https://github.com/alcien/avsr_test/blob/main/asset/lip_K_5_M_04_C955_A_012_9.gif' style='width:200px'>
+</img>
+
+### 입 모양 영상
+
+<img src='https://github.com/alcien/avsr_test/blob/main/asset/mouth_lip_K_5_M_04_C955_A_012_9.gif' width:200px height:100px>
+</img>
+
 ~~~
+wget 
+wget 
+
+python generate_mouth.py --test_dir [dir] --face_predictor_path [face predictor file path] --mean_face_path [mean face file path]
+~~~
+
+1. test_dir
+2. face_predictor_path
+3. mean_face_path
+
 
 
 ##
