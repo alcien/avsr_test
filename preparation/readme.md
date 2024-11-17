@@ -38,7 +38,7 @@ python generate_wav.py --test_dir [My_dir]
 #### 얼굴 landmark를 찾기 위한 필요 파일 다운로드
 ~~~
 wget http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
-bzip2 -d /content/data/misc/shape_predictor_68_face_landmarks.dat.bz2
+bzip2 -d shape_predictor_68_face_landmarks.dat.bz2
 
 wget --content-disposition https://github.com/mpc001/Lipreading_using_Temporal_Convolutional_Networks/raw/master/preprocessing/20words_mean_face.npy
 ~~~
