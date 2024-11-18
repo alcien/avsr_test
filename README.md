@@ -31,7 +31,7 @@ python download.py
 
 ## token 알고리즘 세팅 확인
 spm/unigram 폴더의 unigram5000.model, unigram5000.vocab, unigram5000_units.txt 가 bpe1207 폴더 내에 있는 것인지 확인
-사용자 정의로 모델 라벨을 생성하고 싶을 경우, preparation 폴더의 generation_spm.ipyng 노트북 참고
+사용자 정의로 모델 라벨을 생성하고 싶을 경우, preparation 폴더의 generation_spm.ipynb 노트북 참고
 
 ## 모델 학습
 
