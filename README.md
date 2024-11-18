@@ -125,8 +125,8 @@ cat $model_folder/result.txt
 
 모델 테스트는 eval.py 로 실행
 매개변수: 
-* label_flag는 demo 여부를 판단하기 위한 것으로, demo용은 0로 지정합니다.
-*   * data.modality : 데이터 모달리티 종류, video / audiovisual
+ * label_flag는 demo 여부를 판단하기 위한 것으로, demo용은 0로 지정합니다.
+ * data.modality : 데이터 모달리티 종류, video / audiovisual
   * data.dataset.root_dir : 입 모양, 음성 폴더가 위치한 폴더
   * data.dataset.test_file : 테스트용 csv 파일
   * mouth_dir : 입 모양 폴더명
