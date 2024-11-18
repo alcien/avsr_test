@@ -1,5 +1,15 @@
 # 모델 학습, 테스트
 
+## dependencies-packeages 설치
+~~~
+pip install -r requirements.txt
+
+%cd fairseq
+pip install --editable ./
+%cd ..
+~~~
+
+
 ## 사전 테스트용 모델 다운로드
 입 모양 영상, 입 모양 영상-오디오로 학습된 테스트용 파일은 huggingfacehub으로 다운받습니다. 
 
