@@ -1,6 +1,6 @@
 # 데이터 전처리 사전 준비
-preparation 폴더의 dependencies-packages 설치 
-자세한 사항은 prepration 폴더의 README 참고
+* preparation 폴더의 dependencies-packages 설치 
+* 자세한 사항은 prepration 폴더의 README 참고
 ~~~
 %cd prepration
 
