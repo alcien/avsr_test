@@ -38,7 +38,7 @@ python download.py
 ~~~
 model_folder=/DATA/temp/auto_avsr #현재 폴더
 train_folder=train1207 # 모델이 있는 폴더, 현재 폴더에 존재해야 함
-modality=video #모달리티 종류(입 모양 : video / 입 모양-음성 : audio-visual) 
+modality=video #모달리티 종류(입 모양 : video / 입 모양-음성 : audiovisual) 
 csv_file=train_aavsr_1207.csv # (학습용 csv 파일, preparation 폴더 참조)
 val_file=avsr_1207_1.csv # (valid 용 csv 파일, preparation 폴더 참조) 
 
@@ -51,8 +51,19 @@ prepare_model=/DATA/temp/auto_avsr/train1207/last.ckpt (이전에 학습한 모�
 python $model_folder/train2.py label_flag=1 exp_dir=$model_folder exp_name=$train_folder data.modality=$modality data.dataset.root_dir=/DATA/temp/auto_avsr data.dataset.train_file=$csv_file data.dataset.val_file=$val_file mouth_dir=$mouth wav_dir=$wav trainer.resume_from_checkpoint=$prepare_model
 ~~~
 
-* label_flag는 demo 여부를 판단하기 위한 것으로, 학습, 테스트용은 1로 지정합니다.
-  
+모델 학습은 train2.py 로 실행
+매개변수: 
+  * label_flag는 demo 여부를 판단하기 위한 것으로, 학습, 테스트용은 1로 지정합니다.
+  * exp_dir, exp_name : 모델이 저장될 위치로, [exp_dir]/[expname]  위치에 학습 폴더 저장
+  * data.modality : 데이터 모달리티 종류, video / audiovisual
+  * data.dataset.root_dir : 입 모양, 음성 폴더가 위치한 폴더
+  * data.dastaset.train_file : 학습용 csv 파일
+  * data.dataset.val_file : 테스트용 csv 파일
+  * mouth_dir : 입 모양 폴더명
+  * wav_dir : 음성 폴더명
+  * trainer.resume_from_checkpoint : 학습을 지속할 경우 사용. 학습하던 모델명
+
+    
 ## 모델 테스트
 
 모델의 테스트는 scripts 폴더의 test.sh로 진행합니다. 
@@ -60,7 +71,7 @@ python $model_folder/train2.py label_flag=1 exp_dir=$model_folder exp_name=$trai
 ### 파일 설명
 ~~~
 model_folder=/DATA/temp/auto_avsr #현재 폴더
-modality=video  #모달리티 종류(입 모양 : video / 입 모양-음성 : audio-visual)
+modality=video  #모달리티 종류(입 모양 : video / 입 모양-음성 : audiovisual)
 pretrained_path=/DATA/temp/auto_avsr/train1207/cleaned.ckpt #(테스트용 ckpt 파일, download.py로 받은 av, video.ckpt) 
 mouthD=mouth # 입 모양 영상 폴더 위치 (csv 파일에 기재된 폴더 위치에 영상 폴더가 존재해야 함)
 wavD=wav # 음성 폴더 위치 (csv 파일에 기재된 폴더 위치에 음성 폴더가 존재해야 함)
@@ -70,7 +81,16 @@ csv_file=trainAvsr.csv # (test 용 csv 파일, preparation 폴더 참조)
 python $model_folder/eval.py data.modality=$modality data.dataset.root_dir=/DATA/temp/auto_avsr data.dataset.test_file=$csv_file label_flag=1 mouth_dir=$mouthD wav_dir=$wavD pretrained_model_path=$pretrained_path
 ~~~
 
-* label_flag는 demo 여부를 판단하기 위한 것으로, 학습, 테스트용은 1로 지정합니다.
+모델 테스트는 eval.py 로 실행
+매개변수: 
+  * label_flag는 demo 여부를 판단하기 위한 것으로, 학습, 테스트용은 1로 지정합니다.
+  * data.modality : 데이터 모달리티 종류, video / audiovisual
+  * data.dataset.root_dir : 입 모양, 음성 폴더가 위치한 폴더
+  * data.dataset.test_file : 테스트용 csv 파일
+  * mouth_dir : 입 모양 폴더명
+  * wav_dir : 음성 폴더명
+  * pretrained_model_path : 테스트를 위해 사용할 모델 ckpt 
+
 
 ## 모델 demo
 
@@ -93,7 +113,7 @@ python generate_wav_infer.py --test_dir $mp4_folder --test_fn $mp4_name #테스�
 python generate_infer.py --dataset $mp4_folder --mouth_fd mouth --wav_fd wav --fn $csv_file #모델 테스트용 demo_test.csv 파일 생성
 
 model_folder=/DATA/temp/auto_avsr #테스트용 모델 위치
-modality=video #모달리티 종류(입 모양 : video / 입 모양-음성 : audio-visual)
+modality=video #모달리티 종류(입 모양 : video / 입 모양-음성 : audiovisual)
 pretrained_path=/DATA/temp/auto_avsr/train1207/cleaned.ckpt #(테스트용 ckpt 파일, download.py로 받은 av, video.ckpt) 
 
 #파일 테스트 실행
@@ -102,5 +122,15 @@ python $model_folder/eval.py data.modality=$modality data.dataset.root_dir=/DATA
 #파일 테스트 결과 확인
 cat $model_folder/result.txt
 ~~~
+
+모델 테스트는 eval.py 로 실행
+매개변수: 
 * label_flag는 demo 여부를 판단하기 위한 것으로, demo용은 0로 지정합니다.
+*   * data.modality : 데이터 모달리티 종류, video / audiovisual
+  * data.dataset.root_dir : 입 모양, 음성 폴더가 위치한 폴더
+  * data.dataset.test_file : 테스트용 csv 파일
+  * mouth_dir : 입 모양 폴더명
+  * wav_dir : 음성 폴더명
+  * pretrained_model_path : 테스트를 위해 사용할 모델 ckpt 
+
 
