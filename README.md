@@ -56,6 +56,7 @@ python $model_folder/train2.py label_flag=1 exp_dir=$model_folder exp_name=$trai
 ~~~
 
 모델 학습은 train2.py 로 실행
+
 매개변수: 
   * label_flag는 demo 여부를 판단하기 위한 것으로, 학습, 테스트용은 1로 지정합니다.
   * exp_dir, exp_name : 모델이 저장될 위치로, [exp_dir]/[expname]  위치에 학습 폴더 저장
@@ -86,6 +87,7 @@ python $model_folder/eval.py data.modality=$modality data.dataset.root_dir=/DATA
 ~~~
 
 모델 테스트는 eval.py 로 실행
+
 매개변수: 
   * label_flag는 demo 여부를 판단하기 위한 것으로, 학습, 테스트용은 1로 지정합니다.
   * data.modality : 데이터 모달리티 종류, video / audiovisual
@@ -128,6 +130,7 @@ cat $model_folder/result.txt
 ~~~
 
 모델 테스트는 eval.py 로 실행
+
 매개변수: 
  * label_flag는 demo 여부를 판단하기 위한 것으로, demo용은 0로 지정합니다.
  * data.modality : 데이터 모달리티 종류, video / audiovisual
