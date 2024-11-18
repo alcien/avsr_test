@@ -103,7 +103,8 @@ python generate_csv.py --dataset [folder] --mouth_fd [mouth_dir] --label_fd [lab
 6. Lfn : 영상 자막 합본 파일 (.txt)
 7. spm_path : 영상 자막 토크나이저가 포함된 폴더
      * sentencepiece 모델로 구현
-     * unigram5000.model, unigram5000_units.txt 형식으로 저장되어 있어야 함
+     * 사용 방법은 generate_spm 노트북을 참조
+     * unigram5000.model, unigram5000_units.txt 형식으로 spm/unigram 폴더에 저장되어 있어야 함
 
 # 모델 입력을 위한 demo용 파일 생성
 ~~~
