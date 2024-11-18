@@ -1,6 +1,15 @@
+# 데이터 사전 준비
+preparation 폴더의 dependencies-packages 설치 
+자세한 사항은 prepration 폴더의 README 참고
+~~~
+%cd prepration
+
+pip install -r requirements.txt
+~~~
+
 # 모델 학습, 테스트
 
-## dependencies-packeages 설치
+## dependencies-packages 설치
 ~~~
 pip install -r requirements.txt
 
