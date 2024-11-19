@@ -10,9 +10,9 @@ python generate_mouth_infer.py --test_dir $mp4_folder --test_fn $mp4_name --face
 python generate_wav_infer.py --test_dir $mp4_folder --test_fn $mp4_name
 python generate_infer.py --dataset $mp4_folder --mouth_fd mouth --wav_fd wav --fn $csv_file
 
-model_folder=/DATA/temp/auto_avsr
+model_folder=.
 modality=video
-pretrained_path=/DATA/temp/auto_avsr/train1207/cleaned.ckpt
+pretrained_path=train1207/cleaned.ckpt
 
 python $model_folder/eval.py data.modality=$modality data.dataset.root_dir=/DATA/temp/auto_avsr data.dataset.test_file=$csv_file label_flag=0 mouth_dir=mouth wav_dir=wav pretrained_model_path=$pretrained_path 
 

@@ -1,8 +1,8 @@
-model_folder=/DATA/temp/auto_avsr
+model_folder=.
 modality=video
-pretrained_path=/DATA/temp/auto_avsr/train1207/cleaned.ckpt
-mouthD=mouth
-wavD=wav
-csv_file=/home/aiv-gpu-019/trainAvsr.csv
+pretrained_path=train1207/video.ckpt
+mouthD=lip2
+wavD=wav2
+csv_file=/home/aiv-gpu-019/avsr_1207_1.csv
 
-python $model_folder/eval.py data.modality=$modality data.dataset.root_dir=/DATA/temp/auto_avsr data.dataset.test_file=$csv_file label_flag=1 mouth_dir=$mouthD wav_dir=$wavD pretrained_model_path=$pretrained_path 
+python $model_folder/eval.py data.modality=$modality data.dataset.root_dir=. data.dataset.test_file=$csv_file label_flag=1 mouth_dir=$mouthD wav_dir=$wavD pretrained_model_path=$pretrained_path 
