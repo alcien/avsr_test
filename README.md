@@ -2,7 +2,7 @@
 * preparation 폴더의 dependencies-packages 설치 
 * 자세한 사항은 prepration 폴더의 README 참고
 ~~~
-%cd prepration
+cd prepration
 
 pip install -r requirements.txt
 ~~~
@@ -14,9 +14,9 @@ pip install -r requirements.txt
 pip install pip==22.2
 pip install -r requirements.txt
 
-%cd fairseq
+cd fairseq
 pip install --editable ./
-%cd ..
+cd ..
 ~~~
 
 
