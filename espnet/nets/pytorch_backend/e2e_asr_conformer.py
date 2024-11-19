@@ -17,7 +17,9 @@ from espnet.nets.pytorch_backend.transformer.decoder import Decoder
 from espnet.nets.pytorch_backend.transformer.encoder import Encoder
 from espnet.nets.pytorch_backend.transformer.label_smoothing_loss import LabelSmoothingLoss
 from espnet.nets.pytorch_backend.transformer.mask import target_mask
-
+from transformers import WhisperProcessor, WhisperModel, WhisperForConditionalGeneration
+from espnet.nets.pytorch_backend.backbones.conv1d_extractor import Conv1dResNet
+import torch.nn.functional as F
 
 class E2E(torch.nn.Module):
     def __init__(self, odim, args, ignore_id=-1):
@@ -84,14 +86,24 @@ class E2E(torch.nn.Module):
             )
         else:
             self.ctc = None
-
+        
+        self.processor = WhisperProcessor.from_pretrained("openai/whisper-small")
+        self.whisper = WhisperModel.from_pretrained("openai/whisper-small").to('cpu')
+        forced_decoder_ids = self.processor.get_decoder_prompt_ids(language="korean", task="transcribe")
+        self.whisper.config.forced_decoder_ids = forced_decoder_ids
+        a_upsample_ratio= 1
+        relu_type= 'swish'
+        self.frontend = Conv1dResNet(relu_type=relu_type, a_upsample_ratio=a_upsample_ratio)
     def forward(self, x, lengths, label):
         if self.transformer_input_layer == "conv1d":
             lengths = torch.div(lengths, 640, rounding_mode="trunc")
+
         padding_mask = make_non_pad_mask(lengths).to(x.device).unsqueeze(-2)
+ 
 
         x, _ = self.encoder(x, padding_mask)
 
+        
         # ctc loss
         loss_ctc, ys_hat = self.ctc(x, lengths, label)
 
@@ -102,6 +114,7 @@ class E2E(torch.nn.Module):
         ys_in_pad, ys_out_pad = add_sos_eos(label, self.sos, self.eos, self.ignore_id)
         ys_mask = target_mask(ys_in_pad, self.ignore_id)
         pred_pad, _ = self.decoder(ys_in_pad, ys_mask, x, padding_mask)
+
         loss_att = self.criterion(pred_pad, ys_out_pad)
         loss = self.mtlalpha * loss_ctc + (1 - self.mtlalpha) * loss_att
 

@@ -3,7 +3,8 @@ import os
 import torch
 import torchaudio
 import torchvision
-
+import soundfile as sf
+import librosa
 
 def cut_or_pad(data, size, dim=0):
     """
@@ -32,9 +33,11 @@ def load_audio(path):
     """
     rtype: torch, T x 1
     """
-    waveform, sample_rate = torchaudio.load(path[:-4] + ".wav", normalize=True)
-    return waveform.transpose(1, 0)
-
+    wav, sr = sf.read(path[:-4] + ".wav")
+    if wav.ndim == 2:
+        wav = wav.mean(-1)
+    assert sr== 16_000 and len(wav.shape) == 1
+    return torch.Tensor(wav).unsqueeze(1)
 
 class AVDataset(torch.utils.data.Dataset):
     def __init__(
@@ -45,6 +48,8 @@ class AVDataset(torch.utils.data.Dataset):
         modality,
         audio_transform,
         video_transform,
+        mouth_dir,
+        wav_dir,
         rate_ratio=640,
     ):
 
@@ -52,11 +57,13 @@ class AVDataset(torch.utils.data.Dataset):
 
         self.modality = modality
         self.rate_ratio = rate_ratio
-
         self.list = self.load_list(label_path)
 
         self.audio_transform = audio_transform
         self.video_transform = video_transform
+
+        self.mouth_dir = mouth_dir
+        self.wav_dir = wav_dir
 
     def load_list(self, label_path):
         paths_counts_labels = []
@@ -74,18 +81,33 @@ class AVDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         dataset_name, rel_path, input_length, token_id = self.list[idx]
+        
         path = os.path.join(self.root_dir, dataset_name, rel_path)
         if self.modality == "video":
+            rel_path1 = os.path.join(self.mouth_dir,rel_path)
+            path = os.path.join(self.root_dir,dataset_name, rel_path1)
+     
             video = load_video(path)
             video = self.video_transform(video)
             return {"input": video, "target": token_id}
         elif self.modality == "audio":
+            rel_path2 = os.path.join(self.wav_dir,rel_path)
+            path = os.path.join(self.root_dir, dataset_name, rel_path2)
             audio = load_audio(path)
+          
+            
             audio = self.audio_transform(audio)
+                      
             return {"input": audio, "target": token_id}
         elif self.modality == "audiovisual":
-            video = load_video(path)
-            audio = load_audio(path)
+            rel_path1 = os.path.join(self.mouth_dir,rel_path)
+            path1 = os.path.join(self.root_dir, dataset_name, rel_path1)
+
+            rel_path2 = os.path.join(self.wav_dir,rel_path)
+            path2 = os.path.join(self.root_dir, dataset_name, rel_path2)
+
+            video = load_video(path1)
+            audio = load_audio(path2)
             audio = cut_or_pad(audio, len(video) * self.rate_ratio)
             video = self.video_transform(video)
             audio = self.audio_transform(audio)

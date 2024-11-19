@@ -165,6 +165,7 @@ class Encoder(torch.nn.Module):
             xs = self.frontend(xs)
 
         xs = self.embed(xs)
+        
         xs, masks = self.encoders(xs, masks)
 
         if isinstance(xs, tuple):
@@ -186,7 +187,7 @@ class Encoder(torch.nn.Module):
         """
         if isinstance(self.frontend, (Conv1dResNet, Conv3dResNet)):
             xs = self.frontend(xs)
-
+  
         xs = self.embed(xs)
 
         if cache is None:

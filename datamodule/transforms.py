@@ -115,16 +115,17 @@ class AudioTransform:
         if subset == "train":
             self.audio_pipeline = torch.nn.Sequential(
                 AdaptiveTimeMask(6400, 16000),
-                AddNoise(),
+                #AddNoise(),
                 FunctionalModule(
                     lambda x: torch.nn.functional.layer_norm(x, x.shape, eps=1e-8)
                 ),
             )
         elif subset == "val" or subset == "test":
             self.audio_pipeline = torch.nn.Sequential(
-                AddNoise(snr_target=snr_target)
-                if snr_target is not None
-                else FunctionalModule(lambda x: x),
+                #AddNoise(snr_target=snr_target)
+                #if snr_target is not None
+                #else 
+                FunctionalModule(lambda x: x),
                 FunctionalModule(
                     lambda x: torch.nn.functional.layer_norm(x, x.shape, eps=1e-8)
                 ),

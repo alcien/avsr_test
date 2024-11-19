@@ -112,6 +112,7 @@ class E2E(torch.nn.Module):
             self.ctc = None
 
     def forward(self, video, audio, video_lengths, audio_lengths, label):
+        
         video_padding_mask = make_non_pad_mask(video_lengths).to(video.device).unsqueeze(-2)
         video_feat, _ = self.encoder(video, video_padding_mask)
 
