@@ -20,6 +20,8 @@ git submodule update
 cd fairseq
 pip install --editable ./ #10분에서 15분 정도 소요
 cd ..
+pip install --upgrade omegaconf
+pip install --upgrade hydra-core
 ~~~
 
 
