@@ -5,6 +5,7 @@
 cd prepration
 
 pip install -r requirements.txt
+cd ..
 ~~~
 
 # 모델 학습, 테스트
@@ -13,6 +14,8 @@ pip install -r requirements.txt
 ~~~
 pip install pip==22.2
 pip install -r requirements.txt
+git submodule init
+git submodule update
 
 cd fairseq
 pip install --editable ./
