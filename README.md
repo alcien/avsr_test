@@ -18,7 +18,7 @@ git submodule init
 git submodule update
 
 cd fairseq
-pip install --editable ./
+pip install --editable ./ #10분에서 15분 정도 소요
 cd ..
 ~~~
 
