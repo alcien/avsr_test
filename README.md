@@ -11,6 +11,7 @@ pip install -r requirements.txt
 
 ## dependencies-packages 설치
 ~~~
+pip install pip==22.2
 pip install -r requirements.txt
 
 %cd fairseq
