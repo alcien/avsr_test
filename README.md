@@ -39,6 +39,10 @@ pip install --upgrade hydra-core
 
 모델의 학습은 scripts 폴더의 train.sh로 진행합니다. 
 
+~~~
+bash scripts/train.sh
+~~~
+
 ### 파일 설명
 ~~~
 model_folder=/DATA/temp/auto_avsr #현재 폴더
@@ -74,6 +78,10 @@ python $model_folder/train2.py label_flag=1 exp_dir=$model_folder exp_name=$trai
 
 모델의 테스트는 scripts 폴더의 test.sh로 진행합니다. 
 
+~~~
+bash scripts/test.sh
+~~~
+
 ### 파일 설명
 ~~~
 model_folder=/DATA/temp/auto_avsr #현재 폴더
@@ -104,6 +112,10 @@ python $model_folder/eval.py data.modality=$modality data.dataset.root_dir=/DATA
 영상 파일 하나를 테스트해 볼 경우, scripts 폴더의 demo.sh로 진행합니다. 
 
 prepartion 폴더의 과정을 한번에 진행하여, 영상에서 입 모양 및 음성을 추출하여 테스트하는 과정까지를 포함합니다. 
+
+~~~
+bash scripts/demo.sh
+~~~
 
 ### 파일 설명
 
