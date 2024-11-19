@@ -54,6 +54,7 @@ class ModelModule(LightningModule):
         self.model = E2E(len(self.token_list), self.backbone_args)
         self.sentence_count = 0
         self.total_cer = 0
+        self.fout = open('result.txt','w')
 
 
         # -- initialise
@@ -108,8 +109,10 @@ class ModelModule(LightningModule):
 
         token_id = sample["target"]
         actual = self.text_transform.post_process(token_id)
-        print(f'actual:{actual}\n')
+        if self.cfg.label_flag==1:
+            print(f'actual:{actual}\n')
         print(f'predicted:{predicted}\n')
+        self.fout.write(f'predicted:{predicted}\n')
         self.total_edit_distance += compute_word_level_distance(actual, predicted)
         self.total_length += len(actual.split())
         self.sentence_count+=1
@@ -152,8 +155,12 @@ class ModelModule(LightningModule):
         self.beam_search = get_beam_search_decoder(self.model, self.token_list)
 
     def on_test_epoch_end(self):
-        self.log("wer", self.total_edit_distance / self.total_length)
-        self.log("cer", self.total_cer / float(self.sentence_count))
+        if self.cfg.label_flag==1:
+            self.log("wer", self.total_edit_distance / self.total_length)
+            self.log("cer", self.total_cer / float(self.sentence_count))
+        else:
+            self.log("sentence_count", self.sentence_count)
+            self.fout.close()
 
 
 def get_beam_search_decoder(model, token_list, ctc_weight=0.1, beam_size=40):

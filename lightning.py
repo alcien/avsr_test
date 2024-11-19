@@ -112,7 +112,7 @@ class ModelModule(LightningModule):
         self.total_length += len(actual.split())
         if self.cfg.label_flag==1:
             print(f'actual:{actual}')
-            print(f'predicted:{predicted}')
+            
         print(f'\npredicted:{predicted}\n')
         self.fout.write(f'predicted:{predicted}\n')
         self.sentence_count+=1
